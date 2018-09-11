@@ -108,17 +108,7 @@ public enum TSHttpController {
                     TSAppLogger.i("thread=" + Thread.currentThread().getName());
                     byte[] data = responseBody.bytes();
 
-                    printByteArray(data);
-
-                    Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0,
-                            data.length);
-
-                    TSAppLogger.i("bitmap.getWidth()=" + bitmap.getWidth() + ", " + bitmap.getHeight() + ", " + responseBody);
-
-//                    String json = responseBody.string();
-                    String json = new String(data, "utf-8");
-
-//                    MSAppLogger.i("json=" + json);
+                    String json = responseBody.string();
 
                     if (callback != null) {
                         callback.onSuccess(null, json);
