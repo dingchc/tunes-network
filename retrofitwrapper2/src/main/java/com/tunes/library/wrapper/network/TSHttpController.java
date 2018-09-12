@@ -105,9 +105,6 @@ public enum TSHttpController {
             public void onNext(ResponseBody responseBody) {
                 try {
 
-                    TSAppLogger.i("thread=" + Thread.currentThread().getName());
-                    byte[] data = responseBody.bytes();
-
                     String json = responseBody.string();
 
                     if (callback != null) {
