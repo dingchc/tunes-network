@@ -13,6 +13,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.PartMap;
+import retrofit2.http.QueryMap;
 import retrofit2.http.Streaming;
 import retrofit2.http.Url;
 import io.reactivex.Observable;
@@ -28,11 +29,12 @@ public interface TSHttpService {
     /**
      * Get请求
      *
-     * @param url 地址
+     * @param url      地址
+     * @param paramMap 参数
      * @return 可观察对象
      */
     @GET
-    Observable<ResponseBody> doGet(@Url String url);
+    Observable<ResponseBody> doGet(@Url String url, @QueryMap Map<String, String> paramMap);
 
     /**
      * Post请求

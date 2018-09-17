@@ -121,7 +121,7 @@ public enum TSHttpController {
         };
 
         requestMap.put(tracker, new WeakReference(subscriber));
-        TSRetrofitClient.getInstance().createService(TSHttpService.class).doGet(url).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(subscriber);
+        TSRetrofitClient.getInstance().createService(TSHttpService.class).doGet(url, params).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(subscriber);
 
         return tracker;
     }
