@@ -11,6 +11,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.PartMap;
 import retrofit2.http.QueryMap;
@@ -46,6 +47,17 @@ public interface TSHttpService {
     @FormUrlEncoded
     @POST
     Observable<ResponseBody> doPost(@Url String url, @FieldMap Map<String, String> paramMap);
+
+    /**
+     * Put请求
+     *
+     * @param url      地址
+     * @param paramMap 参数Map
+     * @return 可观察对象
+     */
+    @FormUrlEncoded
+    @PUT
+    Observable<ResponseBody> doPut(@Url String url, @FieldMap Map<String, String> paramMap);
 
     /**
      * 下载文件，支持断点
