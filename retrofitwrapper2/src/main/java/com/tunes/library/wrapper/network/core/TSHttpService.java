@@ -6,6 +6,7 @@ import java.util.Map;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
+import retrofit2.http.DELETE;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -58,6 +59,16 @@ public interface TSHttpService {
     @FormUrlEncoded
     @PUT
     Observable<ResponseBody> doPut(@Url String url, @FieldMap Map<String, String> paramMap);
+
+    /**
+     * Delete请求
+     *
+     * @param url      地址
+     * @param paramMap 参数Map
+     * @return 可观察对象
+     */
+    @DELETE
+    Observable<ResponseBody> doDelete(@Url String url, @QueryMap Map<String, String> paramMap);
 
     /**
      * 下载文件，支持断点

@@ -335,7 +335,7 @@ public enum TSHttpController {
     }
 
     /**
-     * 加载url
+     * Put操作
      *
      * @param url      地址
      * @param params   参数
@@ -384,6 +384,60 @@ public enum TSHttpController {
 
         requestMap.put(tracker, new WeakReference(subscriber));
         TSRetrofitClient.getInstance().createService(TSHttpService.class).doPut(url, params).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(subscriber);
+
+        return tracker;
+    }
+
+    /**
+     * 删除操作
+     *
+     * @param url      地址
+     * @param params   参数
+     * @param callback 回调
+     */
+    public TSHttpTracker doDelete(final String url, Map<String, String> params, final TSHttpCallback callback) {
+
+        final TSHttpTracker tracker = new TSHttpTracker(url);
+
+        ResourceObserver subscriber = new ResourceObserver<ResponseBody>() {
+            @Override
+            public void onComplete() {
+                // 删除请求的订阅者
+                requestMap.remove(tracker);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+                TSAppLogger.e("onError");
+
+                if (callback != null) {
+                    callback.onException(e);
+                }
+                requestMap.remove(tracker);
+            }
+
+            @Override
+            public void onNext(ResponseBody responseBody) {
+                try {
+
+                    String json = responseBody.string();
+
+                    if (callback != null) {
+                        callback.onSuccess(null, json);
+                    }
+                } catch (Exception e) {
+                    if (callback != null) {
+                        callback.onException(e);
+                    }
+                    e.printStackTrace();
+                }
+
+            }
+        };
+
+        requestMap.put(tracker, new WeakReference(subscriber));
+        TSRetrofitClient.getInstance().createService(TSHttpService.class).doDelete(url, params).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(subscriber);
 
         return tracker;
     }
