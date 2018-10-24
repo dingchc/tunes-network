@@ -27,6 +27,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -737,6 +739,27 @@ public enum TSHttpController {
                 }
             }
 
+        }
+    }
+
+    /**
+     * 取消请求
+     */
+    public void cancelAllRequest() {
+
+        if (TSUtil.checkObjNotNull(requestMap) && !requestMap.isEmpty()) {
+
+            Iterator iterator = requestMap.values().iterator();
+
+            while (iterator.hasNext()) {
+                Object obj = iterator.next();
+                if (obj instanceof ResourceObserver) {
+                    ResourceObserver subscriber = (ResourceObserver) obj;
+                    subscriber.dispose();
+
+                    TSAppLogger.i("* do dispose " + obj);
+                }
+            }
         }
     }
 
